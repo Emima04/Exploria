@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import Particles from "./Particles";
 import background from "../../assets/images/home/hero-background.avif";
-import Fog from "./Fog";
 
 export default function Hero() {
   return (
@@ -31,7 +30,6 @@ export default function Hero() {
 
       <div className="absolute inset-0 bg-gradient-to-r from-cyan-950/70 via-black/20 to-transparent" />
       <Particles />
-      <Fog />
 
       {/* Hero Content */}
 
