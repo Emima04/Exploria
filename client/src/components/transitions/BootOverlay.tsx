@@ -15,52 +15,41 @@ const logs = [
 ];
 
 export default function BootOverlay({ show }: BootOverlayProps) {
-
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-
     if (!show) {
       setProgress(0);
       return;
     }
 
     const timeout = setTimeout(() => {
-
       const interval = setInterval(() => {
-
         setProgress((prev) => {
-
           if (prev >= logs.length) {
             clearInterval(interval);
             return prev;
           }
 
           return prev + 1;
-
         });
-
       }, 1300);
 
       return () => clearInterval(interval);
-
     }, 1400);
 
     return () => clearTimeout(timeout);
-
   }, [show]);
 
   if (!show) return null;
 
   return (
-
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 1.5 }}
       className="fixed inset-0 z-[9999] overflow-hidden flex items-center justify-center"
     >
-
       {/* Background */}
 
       <motion.img
@@ -75,13 +64,13 @@ export default function BootOverlay({ show }: BootOverlayProps) {
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Overlay */}
+      {/* Dark Overlay */}
 
       <div className="absolute inset-0 bg-black/90 backdrop-blur-2xl" />
 
       {/* Content */}
 
-      <div className="relative z-10 text-center w-full max-w-4xl px-10">
+      <div className="relative z-10 w-full max-w-4xl text-center px-10">
 
         <motion.p
           initial={{ opacity: 0 }}
@@ -90,12 +79,12 @@ export default function BootOverlay({ show }: BootOverlayProps) {
             delay: 0.7,
             duration: 0.8
           }}
-          className="text-cyan-300 text-2xl font-mono tracking-widest"
+          className="text-cyan-300 text-2xl font-mono tracking-[0.25em]"
         >
           Initializing World...
         </motion.p>
 
-        {/* Segmented Loader */}
+        {/* Square Progress Loader */}
 
         <div className="flex justify-center gap-4 mt-16">
 
@@ -106,18 +95,26 @@ export default function BootOverlay({ show }: BootOverlayProps) {
               animate={
                 progress === index + 1
                   ? {
-                      scale: [1, 1.25, 1]
+                      scale: [1, 1.2, 1]
                     }
                   : {}
               }
               transition={{
-                duration: 0.5
+                duration: 0.4
               }}
-              className={`h-5 w-16 rounded-md transition-all duration-700 ${
-                progress > index
-                  ? "bg-cyan-400 shadow-[0_0_20px_#22d3ee]"
-                  : "bg-zinc-700"
-              }`}
+              className={`
+                w-9
+                h-9
+                rounded-sm
+                border
+                transition-all
+                duration-700
+                ${
+                  progress > index
+                    ? "bg-cyan-400 border-cyan-300 shadow-[0_0_18px_#22d3ee]"
+                    : "bg-zinc-800 border-zinc-600"
+                }
+              `}
             />
 
           ))}
@@ -132,13 +129,11 @@ export default function BootOverlay({ show }: BootOverlayProps) {
           animate={{ opacity: 1 }}
           className="mt-14 text-cyan-200 text-xl font-mono"
         >
-
           {progress === 0
             ? "Preparing Interface..."
             : progress === logs.length
             ? "Cyber Guide Online"
             : logs[progress - 1]}
-
         </motion.p>
 
         {/* Completed Logs */}
@@ -167,18 +162,11 @@ export default function BootOverlay({ show }: BootOverlayProps) {
           {progress === logs.length && (
 
             <motion.div
-              initial={{
-                opacity: 0
-              }}
-              animate={{
-                opacity: 1
-              }}
-              transition={{
-                delay: 0.5
-              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
               className="mt-10 text-center"
             >
-
               <p className="text-cyan-300 text-2xl font-semibold">
                 Cyber Guide
               </p>
@@ -186,7 +174,6 @@ export default function BootOverlay({ show }: BootOverlayProps) {
               <p className="mt-3 text-zinc-300 text-lg">
                 Welcome, Explorer.
               </p>
-
             </motion.div>
 
           )}
@@ -196,7 +183,5 @@ export default function BootOverlay({ show }: BootOverlayProps) {
       </div>
 
     </motion.div>
-
   );
-
 }
